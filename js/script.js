@@ -13,7 +13,7 @@ var colorPicker = {
 
   renderElements: function() {
     var divList = document.getElementById('list');
-      for (var i = 0; i < 15; i++) {
+      for (var i = 0; i < 30; i++) {
          // Child nodes to divList element
          var divItem = document.createElement('div');
          divItem.classList.add('item');
@@ -26,7 +26,7 @@ var colorPicker = {
   setupEventListeners: function() {
     var divList = document.getElementById('list');
     // Mouseover may be less physically intensive?
-    divList.addEventListener('click', function(e) {
+    divList.addEventListener('mouseover', function(e) {
       var el = e.target;
       if (el.className === 'item') {
         el.style.background = this.generateHexColor();

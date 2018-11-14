@@ -1,10 +1,17 @@
 
+
 #list {
   list-style: none;
-  margin: 50px;
+  background-color: #ddd;
+  width: 55%;
+  padding: 10px;
+  margin: 40px auto;
+  text-align: center;
+  border-radius: 3px;
 }
 
 .item {
+  background-color: #fff;
   display: inline-block;
   width: 100px;
   height: 100px;
