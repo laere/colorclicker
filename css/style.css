@@ -1,0 +1,22 @@
+
+#list {
+  list-style: none;
+  margin: 50px;
+}
+
+.item {
+  display: inline-block;
+  width: 100px;
+  height: 100px;
+  text-align: center;
+  border-radius: 3px;
+  margin: 15px;
+  padding: 5px;
+ /*  border: 1px solid #eee; */
+  color: #444;
+  letter-spacing: 1px;
+  text-shadow: 0 2px 4px #000;
+  font-weight: 700;
+  user-select: none;
+  box-shadow: 0px 5px 20px rgba(0,0,0,0.2);
+}
