@@ -6,7 +6,7 @@
 /
 /
 * Input to specify amount of items to create.
-/    -Limit this amount to 30
+/
 /    -If 0 elements exit function/do nothing
 /    -Input text MUST be a number and MUST be required
 /
@@ -33,18 +33,25 @@ var colorClicker = {
   },
 
   renderElements: function() {
-    //var userNumber = document.getElementById().value;
+    var input = document.getElementById('input');
     var divList = document.getElementById('list');
+    // console.log(input);
+    // var divElementsWithClassItem = document.getElementsByClassName('item');
+    // console.log(divElementsWithClassItem);
       // replace 30 with userNumber
-      for (var i = 0; i < 30; i++) {
-         // userNumber === 0 ? console.log('true') : console.log('false');
+      for (var i = 0; i < input.value; i++) {
          // Child nodes to divList element
-         var divItem = document.createElement('div');
-         divItem.classList.add('item');
-         divItem.textContent = 'Click me!';
-         //divItem.style.background = this.generateHexColor();
-         divList.appendChild(divItem);
+         if (input.value === 0 || input.value > 30) {
+          return;
+         }
+           var divItem = document.createElement('div');
+           divItem.classList.add('item');
+           divItem.textContent = 'Click me!';
+           divList.appendChild(divItem);
       }
+
+    input.value = '';
+    input.focus();
   },
 
   setupEventListeners: function() {
@@ -61,10 +68,12 @@ var colorClicker = {
   },
 
   clickToRenderElements: function() {
+    var button = document.getElementById('btn');
 
+    button.addEventListener('click', this.renderElements);
   }
 
 }
 
-colorClicker.renderElements();
+colorClicker.clickToRenderElements();
 colorClicker.setupEventListeners();
