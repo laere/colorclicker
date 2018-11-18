@@ -7,40 +7,52 @@
 * When user clicks button without typing in value
 / Show pop up bubble that says to enter a value
 / Can be a css element with an added class of some sort?
-
-*
 /
+/ Ability to clear all elements.
 */
+// If user enters a number into the input that makes the total amount of elements > 30, exit the function
+
+//Store elements to local storage
+// retrieve elements in local storage
 
 var util = {
 
   hexColorId: function() {
-    var i, random;
-    var id = '';
+      var i, random;
+      var id = '';
 
-    for (i = 0; i < 12; i++) {
-      random = Math.random() * 16 | 0;
-      if (i === 4 || i === 8) {
-        id += '-';
+      for (i = 0; i < 12; i++) {
+        random = Math.random() * 16 | 0;
+        if (i === 4 || i === 8) {
+          id += '-';
+        }
+        id += random.toString(16);
       }
-      id += random.toString(16);
-    }
     return id;
   },
 
   pluralize: function(count, word) {
-    return count === 1 ? word : word + 's';
+      return count === 1 ? word : word + 's';
   },
 
   copyHexColorToClipboard: function() {
     //When text is selected
     //copy to clipboard
   },
+  // localstorage
+  store: function(namespace, data) {
+    if (arguments.length > 1) {
+      return localStorage.setItem(namespace, JSON.stringify(data));
+    } else {
+      var stor = localStorage.getItem(namespace);
+      return localStorage.getitem(store && JSON.parse(store)) || [];
+    }
+  }
 
 };
 
-var colorClicker = {
 
+var colorClicker = {
   generateHexColor: function() {
     var random;
     var id = '#';
@@ -52,40 +64,66 @@ var colorClicker = {
   },
 
   renderElements: function() {
-
     var input = document.getElementById('input');
     var divList = document.getElementById('list');
 
     for (var i = 0; i < input.value; i++) {
 
-      if (input.value > 30) {
-        return;
-      }
+        var divItem = document.createElement('div');
+        var divCrossout = document.createElement('button');
+        var divWrapper = document.createElement('div');
 
-      var divItem = document.createElement('div');
-      divItem.classList.add('item');
-      divItem.textContent = 'Click me!';
-      divItem.setAttribute('id', util.hexColorId());
-      divList.appendChild(divItem);
+        divWrapper.classList.add('item-wrapper')
+        divWrapper.appendChild(divItem)
+
+        divCrossout.classList.add('crossout');
+        divCrossout.textContent = 'X';
+        divCrossout.setAttribute('id', util.hexColorId());
+        divWrapper.appendChild(divCrossout);
+
+        divItem.classList.add('item');
+        divItem.textContent = 'Click me!';
+        divList.appendChild(divWrapper);
     }
 
     input.value = '';
     input.focus();
     this.hideGenerateButton();
     this.showRenderedElementCount();
-    return divList;
+    this.render();
+
   },
 
-  deleteAllElements: function() {
-    var divElementsWithClassItem = document.getElementsByClassName('item')
-    var nodelistToArray = Array.from(divElementsWithClassItem);
-    console.log(nodelistToArray);
-    var length = nodelistToArray.length;
-    //delete all elements
-    // grab all elements
-    // loop through array and delete the amount of elements based on it's length
+  findElementIndex: function(el) {
+    var nodelist = document.querySelectorAll('.crossout')
+    var elementsArray = Array.from(nodelist);
+    var id = el.id;
+    var i = elementsArray.length;
+    console.log(elementsArray);
 
+    while (i--) {
+      if (elementsArray[i].id === id) {
+        console.log('this is ' + i);
+        return i;
+      }
+    }
+  },
 
+  deleteAnElement: function(e) {
+    var nodelist = Array.from(document.querySelectorAll('.item-wrapper'));
+    // Grab index from findElementIndex - refers to index of the buttons which is really the same as the item
+    // However we click the crossout button to get the index of the item position to begin with.
+    // If the index from findElementIndex is equal to the index of the item in the nodelist
+    // Find the parentNode and removeChild the node itself.
+
+    // Turn this into a forEach method
+    for (var i = 0; i < nodelist.length; i++) {
+      var index = this.findElementIndex(e.target);
+      console.log(index);
+      if (i === index) {
+        nodelist[i].parentNode.removeChild(nodelist[i]);
+       }
+    }
   },
 
   hideGenerateButton: function() {
@@ -103,28 +141,11 @@ var colorClicker = {
     return itemCount.textContent = length + ' ' + util.pluralize(length, 'item');
   },
 
+  clearAll: function() {
+    console.log('clear all button')
+  },
 };
 
-//   setupEventListeners: function() {
-//     var divList = document.getElementById('list');
-//     var header = document.getElementById('header');
-//     // Mouseover may be less physically intensive?
-//     divList.addEventListener('mouseover', function(e) {
-//       var el = e.target;
-//       if (el.className === 'item') {
-//         el.style.background = this.generateHexColor();
-//         el.textContent = this.generateHexColor();
-//         el.style.color = '#fff';
-//       }
-//     }.bind(this));
-
-//     header.addEventListener('click', function(e) {
-//       var el = e.target;
-//       if (el.id === "btn") {
-//         this.renderElements();
-//       }
-//     }.bind(this));
-//   }
 
 
 var eventListeners = {
@@ -136,7 +157,6 @@ var eventListeners = {
     // Mouseover may be less physically intensive?
     divList.addEventListener('mouseover', function(e) {
       var el = e.target;
-      console.log(this);
       if (el.className === 'item') {
         el.style.background = colorClicker.generateHexColor();
         el.textContent = colorClicker.generateHexColor();
@@ -144,10 +164,15 @@ var eventListeners = {
       }
     });
 
+    divList.addEventListener('click', function(e) {
+      if (e.target.className === 'crossout') {
+        colorClicker.deleteAnElement(e);
+      }
+    });
+
     header.addEventListener('click', function(e) {
       var el = e.target;
       if (el.id === "btn") {
-        console.log(this);
         colorClicker.renderElements();
       }
     });
@@ -159,9 +184,8 @@ var eventListeners = {
     });
 
     header.addEventListener('click', function(e) {
-      var el = e.target;
-      if (el.id === 'btn-delete') {
-        colorClicker.deleteAllElements();
+      if (e.target.id === 'btn-delete') {
+        colorClicker.clearAll();
       }
     });
 
