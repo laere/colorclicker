@@ -1,10 +1,12 @@
 /* REFACTOR TO SASS*/
-
-
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+}
+
+html {
+  font-family: "Montserrat", sans-serif;
 }
 
 #header {
@@ -19,46 +21,57 @@
   padding: 5px;
 }
 
+#itemcount {
+  margin: 10px 0;
+  font-size: 20px;
+}
+
 button {
   display: inline-block;
-  margin: 10px auto;
-  background-color: #2ECC40;
+  margin: 15px;
+  background-color: #2ecc40;
   border: 1px solid transparent;
-  padding: 10px 20px;
+  padding: 12px 24px;
   cursor: pointer;
   color: #fff;
   border-radius: 3px;
+  font-size: 16px;
+  transform: scale(1);
+  transition: all 0.2s;
 }
 
 button:hover {
   background-color: #fff;
-  color: #2ECC40;
-  border: 1px solid #2ECC40;
+  color: #2ecc40;
+  border: 1px solid #2ecc40;
+  transform: scale(1.1);
+  transition: all 0.2s;
 }
 
 h1 {
   font-weight: 300;
-  font-size: 32px;
-  margin: 10px 0;
+  font-size: 48px;
+  letter-spacing: 2px;
+  margin: 20px 0;
 }
 
 input {
   display: block;
-  margin: 0 auto;
-  width: 150px;
+  margin: 10px auto;
+  width: 262px;
   border: none;
   border-bottom: 3px solid transparent;
   padding: 10px;
   outline: none;
-  transition: all .3s;
+  transition: all 0.3s;
 }
 
 input:focus {
-  border-bottom: 3px solid #FF851B;
+  border-bottom: 3px solid #ff851b;
 }
 
 input:valid {
-  border-bottom: 3px solid #2ECC40;
+  border-bottom: 3px solid #2ecc40;
 }
 
 #list {
@@ -68,7 +81,7 @@ input:valid {
   margin: 30px auto;
   text-align: center;
   border-radius: 3px;
-  box-shadow: 0 10px 15px rgba(black, .15);
+  box-shadow: 0 10px 15px rgba(black, 0.15);
 }
 
 .item-wrapper {
@@ -80,47 +93,48 @@ input:valid {
 .item {
   background-color: #fff;
   display: inline-block;
-  width: 100px;
-  height: 100px;
+  width: 150px;
+  height: 150px;
   text-align: center;
   border-radius: 3px;
   margin: 15px;
   padding: 5px;
- /*  border: 1px solid #eee; */
+  /*  border: 1px solid #eee; */
   color: #444;
   letter-spacing: 1px;
   text-shadow: 0 2px 12px #222;
+  font-size: 16px;
   font-weight: 600;
-  box-shadow: 0px 5px 20px rgba(0,0,0,0.2);
+  box-shadow: 0px 5px 20px rgba(0, 0, 0, 0.2);
   transform: scale(1);
-  transition: all .3s;
+  transition: all 0.3s;
 }
 
 .item:hover {
-  transform: scale(1.0922);
-  transition: all .3s;
+  transform: scale(1.05);
+  transition: all 0.3s;
 }
 
 .crossout {
   position: absolute;
-  top: 0;
-  right: 10px;
+  top: -9px;
+  right: -9px;
   font-size: 12px;
-  padding: 0 3px;
+  padding: 7px 10px;
   border-radius: 1px;
   background-color: #fff;
   display: inline-block;
   border: 1px solid #ccc;
   color: #222;
-  background-color: #eee
-  transform: scale(1);
-  transition: all .4s;
-
+  background-color: #eee;
+  transform: scale(1.1);
+  transition: all 0.4s;
 }
 
 .crossout:hover {
   color: red;
   border: 1px solid red;
-  transform: scale(1.3);
-  transition: all .4s;
+  border-radius: 50%;
+  transform: scale(1.7) rotate(-180deg);
+  transition: all 0.4s;
 }
