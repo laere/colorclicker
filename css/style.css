@@ -1,30 +1,72 @@
 /* REFACTOR TO SASS*/
 * {
   margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
+  padding: 0; }
+
+*,
+*::after,
+*::before {
+  box-sizing: inherit; }
 
 html {
-  font-family: "Montserrat", sans-serif;
-}
+  box-sizing: border-box;
+  font-family: "Montserrat", sans-serif; }
+
+h1 {
+  font-weight: 300;
+  font-size: 40px;
+  letter-spacing: 2px;
+  margin: 20px 0;
+  text-transform: uppercase; }
 
 #header {
-  margin: 20px 0;
-}
+  margin: 30px 0; }
+  #header__textbox {
+    width: 50%;
+    background-color: #ddd;
+    margin: 0 auto;
+    text-align: center;
+    padding: 5px;
+    position: relative; }
 
-#header-textbox {
-  width: 50%;
-  background-color: #f7f7f7;
-  margin: 0 auto;
+#expanded-color {
+  background-color: red;
+  width: 100%;
+  height: 100vh;
+  position: relative;
+  display: none; }
+
+#expanded-color__text {
+  font-size: 4rem;
   text-align: center;
-  padding: 5px;
-}
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: #fff; }
+
+#exitmessage {
+  font-size: 16px;
+  text-transform: uppercase;
+  color: #fff;
+  text-align: center;
+  display: block;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-47%, -500%); }
+
+.popup {
+  background-color: #fff;
+  padding: 10px;
+  transition: all 0.2s;
+  display: none;
+  position: absolute;
+  left: 5%; }
 
 #itemcount {
   margin: 10px 0;
-  font-size: 20px;
-}
+  font-size: 20px; }
 
 button {
   display: inline-block;
@@ -38,57 +80,49 @@ button {
   font-size: 16px;
   transform: scale(1);
   transition: all 0.2s;
-}
+  box-shadow: 0 5px 5px rgba(0, 0, 0, 0.3); }
+  button:hover {
+    background-color: #fff;
+    color: #2ecc40;
+    border: 1px solid #2ecc40;
+    transform: scale(1.1);
+    transition: all 0.2s;
+    box-shadow: 0 10px 10px rgba(0, 0, 0, 0.2); }
 
-button:hover {
-  background-color: #fff;
-  color: #2ecc40;
-  border: 1px solid #2ecc40;
-  transform: scale(1.1);
-  transition: all 0.2s;
-}
-
-h1 {
-  font-weight: 300;
-  font-size: 48px;
-  letter-spacing: 2px;
-  margin: 20px 0;
-}
+#btn__save {
+  background-color: red; }
+  #btn__save:hover {
+    color: red;
+    border: 1px solid red;
+    background-color: #fff; }
 
 input {
+  background-color: #f0eeee;
   display: block;
-  margin: 10px auto;
+  margin: 20px auto;
   width: 262px;
   border: none;
   border-bottom: 3px solid transparent;
   padding: 10px;
   outline: none;
-  transition: all 0.3s;
-}
-
-input:focus {
-  border-bottom: 3px solid #ff851b;
-}
-
-input:valid {
-  border-bottom: 3px solid #2ecc40;
-}
+  transition: all 0.3s; }
+  input:focus {
+    border-bottom: 3px solid #ff851b; }
+  input:valid {
+    border-bottom: 3px solid #2ecc40; }
 
 #list {
   list-style: none;
-  background-color: #f7f7f7;
+  background-color: #ddd;
   width: 50%;
   margin: 30px auto;
   text-align: center;
   border-radius: 3px;
-  box-shadow: 0 10px 15px rgba(black, 0.15);
-}
+  box-shadow: 0 10px 15px rgba(0, 0, 0, 0.15); }
 
 .item-wrapper {
   position: relative;
-
-  display: inline-block;
-}
+  display: inline-block; }
 
 .item {
   background-color: #fff;
@@ -99,7 +133,6 @@ input:valid {
   border-radius: 3px;
   margin: 15px;
   padding: 5px;
-  /*  border: 1px solid #eee; */
   color: #444;
   letter-spacing: 1px;
   text-shadow: 0 2px 12px #222;
@@ -107,13 +140,10 @@ input:valid {
   font-weight: 600;
   box-shadow: 0px 5px 20px rgba(0, 0, 0, 0.2);
   transform: scale(1);
-  transition: all 0.3s;
-}
-
-.item:hover {
-  transform: scale(1.05);
-  transition: all 0.3s;
-}
+  transition: all 0.3s; }
+  .item:hover {
+    transform: scale(1.05);
+    transition: all 0.3s; }
 
 .crossout {
   position: absolute;
@@ -129,12 +159,11 @@ input:valid {
   background-color: #eee;
   transform: scale(1.1);
   transition: all 0.4s;
-}
-
-.crossout:hover {
-  color: red;
-  border: 1px solid red;
-  border-radius: 50%;
-  transform: scale(1.7) rotate(-180deg);
-  transition: all 0.4s;
-}
+  box-shadow: none; }
+  .crossout:hover {
+    color: red;
+    border: 1px solid red;
+    border-radius: 50%;
+    transform: scale(1.7) rotate(-180deg);
+    transition: all 0.4s;
+    box-shadow: none; }

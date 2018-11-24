@@ -10,20 +10,37 @@
   <title>Color Picker</title>
 </head>
 
-<body>
-  <div id="header">
-    <div id="header-textbox">
-      <h1>Color Picker</h1>
-      <input type='number' id="input" min='1' max='30' placeholder="Enter a number" required>
-      <button id="btn">Generate</button>
-      <button id="btn-delete">Clear All</button>
-      <p id="itemcount">
-        <p>
-    </div>
+<body id="body">
+
+  <div id="expanded-color">
+    <!-- <div id="expanded-color__button">x</div> -->
+    <span id="exitmessage">Click anywhere to exit</span>
+    <p id="expanded-color__text"></p>
   </div>
 
-  <div id="list">
+  <div id="container">
+    <div id="header">
+      <div id="header__textbox">
+        <h1>Color Picker</h1>
+        <div class="popup">
+          Please enter a number!
+        </div>
+
+        <input type='number' id="input" min='1' max='30' placeholder="Enter a number" required>
+
+        <button id="btn">Generate</button>
+        <button id="btn-delete">Clear All</button>
+        <button id="btn__save">Save</button>
+        <p id="itemcount">
+          <p>
+      </div>
+    </div>
+
+    <div id="list">
+    </div>
+
   </div>
+
 
   <script src="js/script.js"></script>
 </body>
