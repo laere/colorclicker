@@ -72,15 +72,12 @@ var colorClicker = {
     var divList = document.getElementById("list");
     var nodelist = Array.from(document.querySelectorAll(".item"));
     var popup = document.querySelector('.popup');
-
     // Add an animation to it?
     // Empty input or 0.
     if (input.value === '') {
       popup.style.display = 'block';
-    } else {
-      popup.style.display = 'none';
+      popup.style.animation = 'fadeIn 1s forwards';
     }
-
 
     for (var i = 0; i < input.value; i++) {
       if (input.value > 30) {
@@ -88,7 +85,6 @@ var colorClicker = {
         input.focus();
         return;
       }
-
 
       var divItem = document.createElement("div");
       var divCrossout = document.createElement("button");
@@ -108,7 +104,6 @@ var colorClicker = {
       divItem.textContent = "Click me!";
       divItem.setAttribute('id', util.hexColorId());
       divItem.setAttribute('toggle', false);
-
 
       divList.appendChild(divWrapper);
     }
@@ -132,15 +127,11 @@ var colorClicker = {
     }
   },
 
-
-
   deleteAnElement: function(e) {
     var nodelist = Array.from(document.querySelectorAll(".item-wrapper"));
     // Grab index from findElementIndex - refers to index of the buttons
     // If the index from findElementIndex is equal to the index of the items nodelist
-    // Hide the item
 
-    // Turn this into a forEach method?
     for (var i = 0; i < nodelist.length; i++) {
       var index = this.findElementIndex(e.target);
       if (i === index) {
@@ -162,8 +153,11 @@ var colorClicker = {
     var itemCount = document.getElementById("itemcount");
     var nodelist = document.querySelectorAll(".item-wrapper");
     var length = nodelist.length;
-    return (itemCount.textContent =
-      length + " " + util.pluralize(length, "item"));
+    if (length === 0 ) {
+      itemCount.textContent = length + " " + util.pluralize(length, "item");
+      return;
+    }
+    return itemCount.textContent = length + " " + util.pluralize(length, "item");
   },
 
   clearAll: function() {
@@ -181,40 +175,36 @@ var colorClicker = {
   },
 
   expandedColor: function(e) {
-      var container = document.getElementById('container');
-      var expandedColor = document.getElementById('expanded-color');
-      var expandedColorText = document.getElementById('expanded-color__text');
-      var exitMessage = document.getElementById('exitmessage');
-      var el = e.target;
-      var colorClicked = el.style.background;
-      var hexText = el.textContent;
+    var container = document.getElementById('container');
+    var expandedColor = document.getElementById('expanded-color');
+    var expandedColorText = document.getElementById('expanded-color__text');
+    var exitMessage = document.getElementById('exitmessage');
+    var el = e.target;
+    var colorClicked = el.style.background;
+    var hexText = el.textContent;
 
+    container.style.display = 'none'
+    expandedColor.style.display = 'block';
+    expandedColor.style.background = colorClicked;
+    expandedColorText.textContent = hexText;
 
-      container.style.display = 'none'
-      expandedColor.style.display = 'block';
-      expandedColor.style.background = colorClicked;
-      expandedColorText.textContent = hexText;
-
-    },
-
+  },
 
   exitExpandedColor: function(e) {
-      var container = document.getElementById('container');
-      var expandedColor = document.getElementById('expanded-color');
-      var expandedColorText = document.getElementById('expanded-color__text');
-      var exitMessage = document.getElementById('exitmessage');
+    var container = document.getElementById('container');
+    var expandedColor = document.getElementById('expanded-color');
+    var expandedColorText = document.getElementById('expanded-color__text');
+    var exitMessage = document.getElementById('exitmessage');
 
-      container.style.display = ''
-      expandedColor.style.display = 'none';
-
-    }
+    container.style.display = ''
+    expandedColor.style.display = 'none';
+  }
 };
 
 var eventListeners = {
   setupEventListeners: function() {
     var ENTER_KEY = 13;
     var container = document.getElementById('container');
-    // Mouseover may be less physically intensive?
     container.addEventListener("mouseover", function(e) {
       var el = e.target;
       if (el.className === "item") {
@@ -263,17 +253,12 @@ var eventListeners = {
       }
     });
 
-    // container.addEventListener('click', function(e) {
-    //   if (e.target.id === 'btn__save') {
-    //     util.saveElements();
-    //   }
-    // });
 
     document.body.addEventListener('click', function(e) {
-        if (e.target.id === 'expanded-color') {
-          colorClicker.exitExpandedColor();
-        }
-      });
+      if (e.target.id === 'expanded-color') {
+        colorClicker.exitExpandedColor();
+      }
+    });
 
   }
 };

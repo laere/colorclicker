@@ -71,7 +71,7 @@ h1 {
   background-color: #fff;
   padding: 10px;
   transition: all 0.2s;
-  display: none;
+  opacity: 0;
   position: absolute;
   left: 5%;
 }
@@ -202,5 +202,19 @@ input {
     transform: scale(1.7) rotate(-180deg);
     transition: all 0.4s;
     box-shadow: none;
+  }
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+
+  50% {
+    opacity: .5;
+  }
+
+  100% {
+    opacity: 1;
   }
 }
