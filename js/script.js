@@ -57,16 +57,22 @@ var util = {
   },
   // localstorage
   store: function(namespace, data) {
+    var list = document.getElementById('list');
     if (arguments.length > 1) {
-      return localStorage.setItem(namespace, JSON.stringify(data, ['className', 'tagName', 'childNodes']));
+      return localStorage.setItem(namespace, data);
     } else {
-      var store = localStorage.getItem(JSON.parse(namespace))
-      return (store && JSON.stringify(store)) || [];
+      var colors = localStorage.getItem(namespace)
+      // if (data === undefined) {
+      //   console.log('test');
+      //   list.innerHTML = '';
+      // }
+      list.innerHTML = colors;
     }
   },
 
   saveElements: function() {
-
+    var elements = document.getElementById('list');
+    this.store('colors', elements.innerHTML);
   },
 };
 
@@ -124,6 +130,7 @@ var colorClicker = {
     input.focus();
     this.hideGenerateButton();
     this.showRenderedElementCount();
+    util.store('colors', divList.innerHTML);
   },
   // finds index in an array of elements based on ID
   // Pass in a nodelist arg if reusing.
@@ -141,6 +148,7 @@ var colorClicker = {
   },
 
   deleteAnElement: function(e) {
+    var list = document.getElementById('list');
     var nodelist = Array.from(document.querySelectorAll('.item-wrapper'));
     for (var i = 0; i < nodelist.length; i++) {
       var index = this.findElementIndex(e.target);
@@ -149,6 +157,7 @@ var colorClicker = {
       }
     }
     this.showRenderedElementCount();
+    util.store('colors', list.innerHTML);
   },
 
   hideGenerateButton: function() {
@@ -173,6 +182,7 @@ var colorClicker = {
   clearAll: function() {
     var input = document.getElementById('input');
     var button = document.getElementById('btn');
+    var list = document.getElementById('list');
     var nodelist = Array.from(document.querySelectorAll('.item-wrapper'));
     for (var i = 0; i < nodelist.length; i++) {
       nodelist[i].parentNode.removeChild(nodelist[i]);
@@ -181,8 +191,9 @@ var colorClicker = {
     if (nodelist.length > 0) {
       this.showRenderedElementCount();
     }
-    button.style.display = 'inline-block';
+    util.store('colors', list.innerHTML);
     input.focus();
+
   },
 
   expandedColor: function(e) {
@@ -231,12 +242,6 @@ var eventListeners = {
       }
     });
 
-    document.body.addEventListener('click', function(e) {
-      if (e.target.id === 'btn-copy') {
-        util.copyHexColorToClipboard();
-      }
-    });
-
     container.addEventListener('click', function(e) {
       if (e.target.className === 'item') {
         colorClicker.expandedColor(e);
@@ -262,11 +267,28 @@ var eventListeners = {
       }
     });
 
+    container.addEventListener('click', function(e) {
+      if (e.target.id === 'btn__save') {
+        util.saveElements();
+      }
+    });
+
     document.body.addEventListener('click', function(e) {
       if (e.target.id === 'expanded-color') {
         colorClicker.exitExpandedColor();
       }
     });
+
+    document.body.addEventListener('click', function(e) {
+      if (e.target.id === 'btn-copy') {
+        util.copyHexColorToClipboard();
+      }
+    });
+
+    window.addEventListener('load', function() {
+      util.store('colors');
+      colorClicker.showRenderedElementCount();
+    })
   }
 };
 
