@@ -38,44 +38,64 @@ h1 {
   }
 }
 
+
 #expanded-color {
   background-color: red;
   width: 100%;
   height: 100vh;
   position: relative;
   display: none;
-}
-
-#expanded-color__text {
-  display: inline-block;
-  font-size: 4rem;
   text-align: center;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
   color: #fff;
-  z-index: 1111;
+
+
+
+  &__text-box {
+    width: 30%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    & > *:not(:last-child) {
+      margin-bottom: 1.7rem;
+    }
+  }
+
+  &__text {
+    font-size: 4rem;
+  }
+
+  & #exitmessage {
+    display: block;
+  }
+
+  & #btn-copy {
+    background-color: #eee;
+    color: #888;
+    font-weight: 100;
+    &:hover {
+      border: 1px solid #888;
+    }
+
+    &:active {
+      box-shadow: 0 5px 10px rgba(black, .6);
+      transform: scale(1);
+    }
+  }
 }
 
-#btn-copy {
-  display: inline-block;
-  position: absolute;
-  top: 42%;
-  right: 33%
 
-}
+// #expanded-color__text {
+//   font-size: 4rem;
+//   color: #fff;
+//
+// }
+
 
 #exitmessage {
   font-size: 16px;
   text-transform: uppercase;
-  color: #fff;
-  text-align: center;
-  display: block;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-47%, -500%);
 }
 
 .popup {
@@ -84,7 +104,7 @@ h1 {
   transition: all 0.2s;
   opacity: 0;
   position: absolute;
-  left: 5%;
+  left: 12%;
 }
 
 .copy-text {

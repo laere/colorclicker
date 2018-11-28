@@ -8,12 +8,12 @@
 
 // 2. Set up localstorage
 
-// 4. Add hex color text into middle of div
-//  most likely need to embed a child element into it with the text
-
 // 5. Hide the delete button until hovering oer the div wrapper element
 
 // 6. Option to change hex value to rgb values.
+
+// If color is a certain brightness add dark outlining to text.
+// Instead of hiding/showing toggle expanded color how about appending and removing element ?
 
 */
 
@@ -88,9 +88,11 @@ var colorClicker = {
     var popup = document.querySelector('.popup');
     // Add an animation to it?
     // Empty input or 0.
-    if (input.value === '') {
+    if (input.value === '' && nodelist.length === 0) {
       popup.style.display = 'block';
       popup.style.animation = 'fadeIn 1s forwards';
+    } else {
+      popup.style.display = 'none';
     }
     for (var i = 0; i < input.value; i++) {
       if (input.value > 30) {
@@ -169,6 +171,7 @@ var colorClicker = {
   },
 
   clearAll: function() {
+    var input = document.getElementById('input');
     var button = document.getElementById('btn');
     var nodelist = Array.from(document.querySelectorAll('.item-wrapper'));
     for (var i = 0; i < nodelist.length; i++) {
@@ -179,6 +182,7 @@ var colorClicker = {
       this.showRenderedElementCount();
     }
     button.style.display = 'inline-block';
+    input.focus();
   },
 
   expandedColor: function(e) {
@@ -263,8 +267,8 @@ var eventListeners = {
         colorClicker.exitExpandedColor();
       }
     });
-
   }
 };
 
 eventListeners.setupEventListeners();
+window.input.focus();
