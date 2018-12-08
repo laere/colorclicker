@@ -5,14 +5,10 @@
 // FEATURES TO ADD:
 
 // !! REFACTOR CODE !!
-
-// 2. Set up localstorage
-
-// 5. Hide the delete button until hovering oer the div wrapper element
+    // Opt for get methods over queryselector
 
 // 6. Option to change hex value to rgb values.
 
-// If color is a certain brightness add dark outlining to text.
 // Instead of hiding/showing toggle expanded color how about appending and removing element ?
 
 */
@@ -36,12 +32,18 @@ var util = {
     return count === 1 ? word : word + 's';
   },
 
+  backgroundStyle: function(el) {
+    el.style.background = colorClicker.generateHexColor();
+    el.textContent = colorClicker.generateHexColor();
+    el.style.color = '#fff';
+  },
+
   copyHexColorToClipboard: function() {
     //do a button instead of textarea
-    var expandedColor = document.getElementById('expanded-color');
-    var input = document.createElement('input');
-    var expandedColorText = document.getElementById('expanded-color__text');
-    var hexValue = expandedColorText.innerHTML;
+    var expandedColor = document.getElementById('expanded-color'),
+        input = document.createElement('input'),
+        expandedColorText = document.getElementById('expanded-color__text'),
+        hexValue = expandedColorText.innerHTML;
 
     input.classList.add('copy-text');
     input.setAttribute('type', 'text');
@@ -69,17 +71,12 @@ var util = {
       list.innerHTML = colors;
     }
   },
-
-  saveElements: function() {
-    var elements = document.getElementById('list');
-    this.store('colors', elements.innerHTML);
-  },
 };
 
 var colorClicker = {
   generateHexColor: function() {
-    var random;
-    var id = '#';
+    var random,
+        id = '#';
     for (var i = 0; i < 6; i++) {
       random = (Math.random() * 16) | 0;
       id += random.toString(16);
@@ -88,10 +85,10 @@ var colorClicker = {
   },
   // Nodelist doesnt update until after entire render function is finished executing.
   renderElements: function() {
-    var input = document.getElementById('input');
-    var divList = document.getElementById('list');
-    var nodelist = Array.from(document.querySelectorAll('.item'));
-    var popup = document.querySelector('.popup');
+    var input = document.getElementById('input'),
+        colorElementList = document.getElementById('list'),
+        nodelist = Array.from(document.querySelectorAll('.item')),
+        popup = document.querySelector('.popup');
     // Add an animation to it?
     // Empty input or 0.
     if (input.value === '' && nodelist.length === 0) {
@@ -106,39 +103,41 @@ var colorClicker = {
         input.focus();
         return;
       }
-      var divItem = document.createElement('div');
-      var divCrossout = document.createElement('button');
-      var divWrapper = document.createElement('div');
+      var colorItem = document.createElement('div'),
+          itemDeleteButton = document.createElement('button'),
+          colorItemWrapper = document.createElement('div');
 
-      divWrapper.classList.add('item-wrapper');
-      divWrapper.appendChild(divItem);
 
-      divCrossout.classList.add('crossout');
-      divCrossout.textContent = 'X';
-      divCrossout.setAttribute('id', util.hexColorId());
+      colorItemWrapper.classList.add('item-wrapper');
+      colorItemWrapper.appendChild(colorItem);
 
-      divWrapper.appendChild(divCrossout);
+      itemDeleteButton.classList.add('crossout');
+      itemDeleteButton.textContent = 'X';
+      itemDeleteButton.setAttribute('id', util.hexColorId());
 
-      divItem.classList.add('item');
-      divItem.textContent = 'Click me!';
-      divItem.setAttribute('id', util.hexColorId());
+      colorItemWrapper.appendChild(itemDeleteButton);
 
-      divList.appendChild(divWrapper);
+      colorItem.classList.add('item');
+      colorItem.textContent = 'Hover me!';
+      colorItem.setAttribute('id', util.hexColorId());
+
+
+      colorElementList.appendChild(colorItemWrapper);
 
     }
     input.value = '';
     input.focus();
     this.hideGenerateButton();
     this.showRenderedElementCount();
-    util.store('colors', divList.innerHTML);
+    util.store('colors', colorElementList.innerHTML);
   },
   // finds index in an array of elements based on ID
   // Pass in a nodelist arg if reusing.
   findElementIndex: function(el) {
-    var nodelist = document.querySelectorAll('.crossout');
-    var elementsArray = Array.from(nodelist);
-    var id = el.id;
-    var i = elementsArray.length;
+    var nodelist = document.querySelectorAll('.crossout'),
+        elementsArray = Array.from(nodelist),
+        id = el.id,
+        i = elementsArray.length;
 
     while (i--) {
       if (elementsArray[i].id === id) {
@@ -148,8 +147,8 @@ var colorClicker = {
   },
 
   deleteAnElement: function(e) {
-    var list = document.getElementById('list');
-    var nodelist = Array.from(document.querySelectorAll('.item-wrapper'));
+    var list = document.getElementById('list'),
+        nodelist = Array.from(document.querySelectorAll('.item-wrapper'));
     for (var i = 0; i < nodelist.length; i++) {
       var index = this.findElementIndex(e.target);
       if (i === index) {
@@ -161,17 +160,17 @@ var colorClicker = {
   },
 
   hideGenerateButton: function() {
-    var nodelist = document.querySelectorAll('.item');
-    var button = document.getElementById('btn');
+    var nodelist = document.querySelectorAll('.item'),
+        button = document.getElementById('btn');
     if (nodelist.length === 30) {
       button.style.display = 'none';
     }
   },
 
   showRenderedElementCount: function() {
-    var itemCount = document.getElementById('itemcount');
-    var nodelist = document.querySelectorAll('.item-wrapper');
-    var length = nodelist.length;
+    var itemCount = document.getElementById('itemcount'),
+        nodelist = document.querySelectorAll('.item-wrapper'),
+        length = nodelist.length;
     if (length === 0 ) {
       itemCount.textContent = length + ' ' + util.pluralize(length, 'item');
       return;
@@ -180,10 +179,10 @@ var colorClicker = {
   },
 
   clearAll: function() {
-    var input = document.getElementById('input');
-    var button = document.getElementById('btn');
-    var list = document.getElementById('list');
-    var nodelist = Array.from(document.querySelectorAll('.item-wrapper'));
+    var input = document.getElementById('input')
+        button = document.getElementById('btn'),
+        list = document.getElementById('list'),
+        nodelist = Array.from(document.querySelectorAll('.item-wrapper'));
     for (var i = 0; i < nodelist.length; i++) {
       nodelist[i].parentNode.removeChild(nodelist[i]);
     }
@@ -197,11 +196,11 @@ var colorClicker = {
   },
 
   expandedColor: function(e) {
-    var container = document.getElementById('container');
-    var expandedColor = document.getElementById('expanded-color');
-    var expandedColorText = document.getElementById('expanded-color__text');
-    var colorClicked = e.target.style.background;
-    var hexText = e.target.textContent;
+    var container = document.getElementById('container'),
+        expandedColor = document.getElementById('expanded-color'),
+        expandedColorText = document.getElementById('expanded-color__text'),
+        colorClicked = e.target.style.background,
+        hexText = e.target.textContent;
 
     container.style.display = 'none'
     expandedColor.style.display = 'block';
@@ -211,28 +210,28 @@ var colorClicker = {
   },
 
   exitExpandedColor: function(e) {
-    var container = document.getElementById('container');
-    var expandedColor = document.getElementById('expanded-color');
-    var expandedColorText = document.getElementById('expanded-color__text');
+    var container = document.getElementById('container'),
+        expandedColor = document.getElementById('expanded-color'),
+        expandedColorText = document.getElementById('expanded-color__text');
 
     container.style.display = ''
     expandedColorText.style.color = '#fff';
     expandedColor.style.display = 'none';
-
   }
 };
 
 var eventListeners = {
+
   setupEventListeners: function() {
-    var ENTER_KEY = 13;
-    var container = document.getElementById('container');
+    var ENTER_KEY = 13,
+        ESC_KEY = 27,
+        container = document.getElementById('container'),
+        input = document.getElementById('input');
 
     container.addEventListener('mouseover', function(e) {
       var el = e.target;
       if (el.className === 'item') {
-        el.style.background = colorClicker.generateHexColor();
-        el.textContent = colorClicker.generateHexColor();
-        el.style.color = '#fff';
+        util.backgroundStyle(e.target);
       }
     });
 
@@ -259,17 +258,15 @@ var eventListeners = {
       if (e.which === ENTER_KEY) {
         colorClicker.renderElements();
       }
+
+      if (e.which === ESC_KEY) {
+        input.blur();
+      }
     });
 
     container.addEventListener('click', function(e) {
       if (e.target.id === 'btn-delete') {
         colorClicker.clearAll();
-      }
-    });
-
-    container.addEventListener('click', function(e) {
-      if (e.target.id === 'btn__save') {
-        util.saveElements();
       }
     });
 
@@ -293,4 +290,3 @@ var eventListeners = {
 };
 
 eventListeners.setupEventListeners();
-window.input.focus();
