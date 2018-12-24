@@ -7,9 +7,10 @@
 // !! REFACTOR CODE !!
     // Opt for get methods over queryselector
 
-// 6. Option to change hex value to rgb values.
+// 6. add rgba values as well
 
 // Instead of hiding/showing toggle expanded color how about appending and removing element ?
+
 
 */
 
@@ -36,6 +37,7 @@ var util = {
     el.style.background = colorClicker.generateHexColor();
     el.textContent = colorClicker.generateHexColor();
     el.style.color = '#fff';
+    console.log(el.getAttribute('style', 'background'));
   },
 
   copyHexColorToClipboard: function() {
@@ -43,7 +45,12 @@ var util = {
     var expandedColor = document.getElementById('expanded-color'),
         input = document.createElement('input'),
         expandedColorText = document.getElementById('expanded-color__text'),
-        hexValue = expandedColorText.innerHTML;
+        hexValue = expandedColorText.innerHTML,
+        copiedText = document.getElementById('copied-text');
+
+
+    copiedText.style.display = 'block';
+
 
     input.classList.add('copy-text');
     input.setAttribute('type', 'text');
@@ -123,6 +130,7 @@ var colorClicker = {
 
 
       colorElementList.appendChild(colorItemWrapper);
+      console.log(colorItem);
 
     }
     input.value = '';
@@ -200,7 +208,13 @@ var colorClicker = {
         expandedColor = document.getElementById('expanded-color'),
         expandedColorText = document.getElementById('expanded-color__text'),
         colorClicked = e.target.style.background,
-        hexText = e.target.textContent;
+        hexText = e.target.textContent,
+        rgbValue = e.target.getAttribute('style', 'background');
+    console.log(e.target);
+        copiedText = document.getElementById('copied-text');
+        console.log(rgbValue);
+
+    copiedText.style.display = 'none';
 
     container.style.display = 'none'
     expandedColor.style.display = 'block';
@@ -217,6 +231,14 @@ var colorClicker = {
     container.style.display = ''
     expandedColorText.style.color = '#fff';
     expandedColor.style.display = 'none';
+  },
+
+  copiedTextPopUp: function(e) {
+    var copiedText = document.getElementById('copied-text');
+    copiedText.style.display = 'none';
+    if (e.target.id === 'btn-copy') {
+      copiedText.style.display = 'block';
+    }
   }
 };
 
@@ -279,6 +301,7 @@ var eventListeners = {
     document.body.addEventListener('click', function(e) {
       if (e.target.id === 'btn-copy') {
         util.copyHexColorToClipboard();
+
       }
     });
 

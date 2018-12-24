@@ -10,6 +10,7 @@
 *::before {
   box-sizing: inherit;
 }
+
 html {
   box-sizing: border-box;
   font-family: "Montserrat", sans-serif;
@@ -51,7 +52,6 @@ h1 {
 
 
   &__text-box {
-    width: 30%;
     position: absolute;
     top: 50%;
     left: 50%;
@@ -68,6 +68,15 @@ h1 {
 
   & #exitmessage {
     display: block;
+  }
+
+  #copied-text {
+    text-align: center;
+    box-shadow: 0 1rem 2rem rgba(black, .2);
+    margin: 2rem auto;
+    width: 80%;
+    padding: 1rem 0;
+    font-size: 1.4rem;
   }
 
   & #btn-copy {
